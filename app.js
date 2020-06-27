@@ -1,11 +1,26 @@
-var express = require('express');
-var app = express();
+const express = require('express')
 
-app.get('/xxx', function (request, response) {
-  response.send('你好');
-});
+const app = express()
 
-const port = 4000
-app.listen(port, function () {
-  console.log(`Example app listening on port ${port}!`);
-});
+app.use((request, response, next) => {
+  console.log(request.url)
+  response.write('hi')
+  next() // next表示当前的功能已经完成了，进入下一个功能,send只能发一次
+})
+
+app.use((request, response, next) => {
+  console.log(2)
+  response.write('hello')
+  next()
+})
+
+app.use((request, response, next) => {
+  console.log(3)
+  response.end()
+  next()
+})
+
+
+app.listen(3000, () => {
+  console.log('正在 listen 3000')
+})
