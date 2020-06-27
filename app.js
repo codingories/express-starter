@@ -6,21 +6,26 @@ const app = express()
 
 app.use(logger('dev'))
 
-app.use((request, response, next) => {
-  response.write('hi')
-  next() // next表示当前的功能已经完成了，进入下一个功能,send只能发一次
-})
-
-app.use((request, response, next) => {
-  response.write('hello')
+app.use((request, response, next)=>{
+  if (request.path === '/' && request.method === "get" ){
+    response.send('根目录')
+  }
   next()
 })
 
-app.use((request, response, next) => {
-  response.end()
+app.use((request, response, next)=>{
+  if (request.path === '/aaa'){
+    response.send('这是 aaa')
+  }
   next()
 })
 
+app.use((request, response, next)=>{
+  if (request.path === '/bbb'){
+    response.send('这是 bbb')
+  }
+  next()
+})
 
 app.listen(3000, () => {
   console.log('正在 listen 3000')
