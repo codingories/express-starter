@@ -13,19 +13,11 @@ app.use((request, response, next)=>{
   next()
 })
 
-app.use((request, response, next)=>{
-  if (request.path === '/aaa'){
-    response.send('这是 aaa')
-  }
+app.get('/xxx',(request, response, next)=>{
+  response.send('xxx 页面')
   next()
 })
 
-app.use((request, response, next)=>{
-  if (request.path === '/bbb'){
-    response.send('这是 bbb')
-  }
-  next()
-})
 
 app.listen(3000, () => {
   console.log('正在 listen 3000')
