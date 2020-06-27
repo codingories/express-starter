@@ -4,28 +4,28 @@ const app = express()
 
 
 app.use(logger('dev'))
-
-app.use((request, response, next) => {
-  if (request.path === '/' && request.method === "get") {
-    response.send('根目录')
-  }
+app.use((request, response, next)=>{
+  response.write("1")
   next()
 })
-
-app.get('/xxx', (request, response, next) => {
-  response.send('xxx 页面')
-  next()
-})
-
-app.route('/xxxx')
-  // .all(() => {console.log('ffff')})
-  .get((request, response, next) => {
-    console.log('ttttta')
-    response.send('xxxx')
-    response.end()
+app.use((request, response, next)=>{
+  response.write("2")
+  if(true){ // 如果有错误会进入带error的回调
+    next("not login")
+  } else {
     next()
-  })
+  }
+})
 
+app.use((error, request, response, next)=>{
+  response.write(error)
+  response.end()
+  next()
+})
+
+app.use((request, response, next)=>{
+  response.write("3")
+})
 
 app.listen(3000, () => {
   console.log('正在 listen 3000')
